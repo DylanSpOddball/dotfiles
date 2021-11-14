@@ -134,6 +134,15 @@ function gupdate() {
   git checkout $1 && git fetch && git status
 }
 
+# from https://github.com/microsoft/WSL/issues/5065#issuecomment-682198412
+fix_wsl2_interop() {
+    for i in $(pstree -np -s $$ | grep -o -E '[0-9]+'); do
+        if [[ -e "/run/WSL/${i}_interop" ]]; then
+            export WSL_INTEROP=/run/WSL/${i}_interop
+        fi
+    done
+}
+
 
 # double wildcards for recursive matching of subdirectories
 shopt -s globstar
