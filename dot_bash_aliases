@@ -1,8 +1,4 @@
 alias n='nano'
-alias na='nano ~/.bash_aliases; source ~/.bashrc'
-alias nr='nano ~/.bashrc; source ~/.bashrc'
-
-alias e='emacs'
 
 alias md='mkdir'
 alias ll='ls -al'
@@ -22,27 +18,8 @@ alias gdiscard='git checkout --'
 alias gpush='git push origin'
 alias gpull='git pull'
 
-# Haskell Stack
-alias sexec='stack exec -- '
-alias sbuild='stack build'
-
-# Note: with this, HLint can't be used outside a Stack project
-alias hlint='stack exec -- hlint'
-
-# Note: with this, hoogle can't be used outside a Stack project
-alias hoogle='stack hoogle'
-
-# Haskell Yesod
-alias ydev='stack exec -- yesod devel'
-
-# Write Yourself a Scheme
-alias scm_exec='stack exec write-yourself-a-scheme'
-
 # Docker
-alias dps='sudo docker ps'
-alias dimgs='sudo docker images'
-alias dkill='sudo docker kill'
-alias drm='sudo docker rm'
-
-# Python
-alias py='python3'
+alias dps='docker ps'
+alias dimgs='docker images'
+alias dkill='docker kill'
+alias drm='docker rm'
