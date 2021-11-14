@@ -1,6 +1,4 @@
 alias n='nano'
-alias na='nano ~/.bash_aliases; source ~/.bashrc'
-alias nr='nano ~/.bashrc; source ~/.bashrc'
 
 alias e='emacs'
 
