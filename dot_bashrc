@@ -2,6 +2,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# set DISPLAY variable to the IP automatically assigned to WSL2
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+
+sudo /etc/init.d/dbus start &> /dev/null
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -118,7 +123,7 @@ fi
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
-export PATH="$(go env GOPATH):$PATH"
+export PATH="$(go env GOPATH)/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
 
