@@ -1,4 +1,5 @@
 alias n='nano'
+alias e='emacs'
 
 alias md='mkdir'
 alias ll='ls -al'
