@@ -158,6 +158,26 @@ function mylduser() {
     lduser "SWKJ"
 }
 
+function lookup_eua() {
+  if [ -z "$1" ]; then
+    echo "No EUA ID supplied"
+    return 1
+  fi
+
+  connection_timeout=5 # Number of seconds to try connecting before exiting
+  proxy="${HTTP_PROXY:-localhost:8888}"
+
+  eua_id="$1"
+  cedar_url="https://webmethods-apigw.cedarimpl.cms.gov/gateway/LDAP/1.0/person/${eua_id}"
+
+  if cedar_response=$(curl --silent --proxy "$proxy" --connect-timeout "$connection_timeout" -H "Accept: application/json" "$cedar_url"); then
+    echo "$cedar_response" | jq '.Persons[0].commonName'
+  else
+    echo "Failed to connect to CEDAR LDAP"
+    return 1
+  fi
+}
+
 
 # double wildcards for recursive matching of subdirectories
 shopt -s globstar
@@ -167,5 +187,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export EDITOR="/usr/bin/nano"
+
 
 eval "$(direnv hook bash)"
