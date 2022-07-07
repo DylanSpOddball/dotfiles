@@ -189,4 +189,30 @@ export NVM_DIR="$HOME/.nvm"
 export EDITOR="/usr/bin/nano"
 
 
+# docker-compose commands only work when in easi-app directory;
+# they need to be able to reference docker-compose.yml files
+
+function dockershell() {
+  if [ -z "$1" ]; then
+    echo "No service name supplied"
+    return 1
+  fi
+
+  docker-compose exec "$1" bash
+}
+
+function easilogs-print() {
+  docker-compose logs --no-log-prefix easi
+}
+
+function easilogs-follow() {
+  docker-compose logs --no-log-prefix -f easi
+}
+
+function easilogs-jq() {
+  easilogs-print | jq --raw-input 'fromjson?'
+}
+
+
+
 eval "$(direnv hook bash)"
