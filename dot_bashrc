@@ -213,6 +213,9 @@ function easilogs-jq() {
   easilogs-print | jq --raw-input 'fromjson?'
 }
 
+function easilogs-errors() {
+  easilogs-jq | jq 'select(.level == "error")'
+}
 
 
 eval "$(direnv hook bash)"
