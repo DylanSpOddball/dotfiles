@@ -165,12 +165,11 @@ function lookup_eua() {
   fi
 
   connection_timeout=5 # Number of seconds to try connecting before exiting
-  proxy="${HTTP_PROXY:-localhost:8888}"
 
   eua_id="$1"
   cedar_url="https://webmethods-apigw.cedarimpl.cms.gov/gateway/LDAP/1.0/person/${eua_id}"
 
-  if cedar_response=$(curl --silent --proxy "$proxy" --connect-timeout "$connection_timeout" -H "Accept: application/json" "$cedar_url"); then
+  if cedar_response=$(curl --silent --connect-timeout "$connection_timeout" -H "Accept: application/json" "$cedar_url"); then
     echo "$cedar_response" | jq '.Persons[0].commonName'
   else
     echo "Failed to connect to CEDAR LDAP"
