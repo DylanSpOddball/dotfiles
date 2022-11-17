@@ -4,6 +4,14 @@
 
 # set DISPLAY variable to the IP automatically assigned to WSL2
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+#export DISPLAY="127.0.1.1"
+
+#WSL_IP="172.29.19.162"
+#WSL_IP="DESKTOP-7CDDV04"
+#export DISPLAY="$WSL_IP:0.0"
+
+#export DISPLAY="DESKTOP-7CDDV04:0"
+
 
 sudo /etc/init.d/dbus start &> /dev/null
 
@@ -169,7 +177,7 @@ function lookup_eua() {
   eua_id="$1"
   cedar_url="https://webmethods-apigw.cedarimpl.cms.gov/gateway/LDAP/1.0/person/${eua_id}"
 
-  if cedar_response=$(curl --silent --connect-timeout "$connection_timeout" -H "Accept: application/json" "$cedar_url"); then
+  if cedar_response=$(curl --silent --connect-timeout "$connection_timeout" -H "Accept: application/json" -H "x-Gateway-APIKey: $CEDAR_API_KEY" "$cedar_url"); then
     echo "$cedar_response" | jq '.Persons[0].commonName'
   else
     echo "Failed to connect to CEDAR LDAP"
