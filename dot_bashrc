@@ -2,16 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-# set DISPLAY variable to the IP automatically assigned to WSL2
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
-#export DISPLAY="127.0.1.1"
-
-#WSL_IP="172.29.19.162"
-#WSL_IP="DESKTOP-7CDDV04"
-#export DISPLAY="$WSL_IP:0.0"
-
-#export DISPLAY="DESKTOP-7CDDV04:0"
-
+# Hardcode this so WSLg can use it
+export DISPLAY=:0
 
 sudo /etc/init.d/dbus start &> /dev/null
 
