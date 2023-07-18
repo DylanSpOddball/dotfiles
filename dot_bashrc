@@ -216,5 +216,9 @@ function easilogs-errors() {
   easilogs-jq | jq 'select(.level == "error")'
 }
 
+# not Docker-related, but still EASi-specific; runs golangci-lint via EASi's specific pre-commit config
+function golint() {
+  pre-commit run golangci-lint
+}
 
 eval "$(direnv hook bash)"
