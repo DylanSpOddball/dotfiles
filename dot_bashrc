@@ -167,12 +167,12 @@ function lookup_eua() {
   connection_timeout=5 # Number of seconds to try connecting before exiting
 
   eua_id="$1"
-  cedar_url="https://webmethods-apigw.cedarimpl.cms.gov/gateway/LDAP/1.0/person/${eua_id}"
+  okta_url="$OKTA_API_URL/api/v1/users/$eua_id"
 
-  if cedar_response=$(curl --silent --connect-timeout "$connection_timeout" -H "Accept: application/json" -H "x-Gateway-APIKey: $CEDAR_API_KEY" "$cedar_url"); then
-    echo "$cedar_response" | jq '.Persons[0].commonName'
+  if cedar_response=$(curl --silent --connect-timeout "$connection_timeout" -H "Accept: application/json" -H "Authorization: SSWS $OKTA_API_TOKEN" "$okta_url"); then
+    echo "$cedar_response" | jq '.profile.displayName'
   else
-    echo "Failed to connect to CEDAR LDAP"
+    echo "Failed to connect to Okta"
     return 1
   fi
 }
