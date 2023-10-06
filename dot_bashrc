@@ -216,6 +216,26 @@ function easilogs-errors() {
   easilogs-jq | jq 'select(.error == true)'
 }
 
+function easilogs-stacktrace-latest() {
+  # get all easilogs
+  # invoke jq with --compact-output to output on a single line
+    # filter out non-json with --raw-input and 'fromjson?'
+    # select based on level (that's how errors with stacktraces get logged)
+    # pull out stacktrace field
+  # get last line
+  # replace literal \n and \t with actual newline/tab characters to format stacktrace properly
+
+  # Still has quotes at start of first line and end of last line, from JSON output,
+  # but using --raw-output with jq to avoid quotes prints actual newlines/tabs, so using tail -n 1 doesn't work
+
+  easilogs-print \
+  | jq --raw-input --compact-output 'fromjson? | select(.level == "error") | .stacktrace' \
+  | tail -n 1 \
+  | sed 's/\\n/\n/g' \
+  | sed 's/\\t/\t/g'
+}
+
+
 # not Docker-related, but still EASi-specific; runs golangci-lint via EASi's specific pre-commit config
 function golint() {
   pre-commit run golangci-lint
